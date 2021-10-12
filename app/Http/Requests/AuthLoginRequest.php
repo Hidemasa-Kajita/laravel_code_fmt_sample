@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class AuthRegisterRequest extends BaseRequest
+class AuthLoginRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,8 +17,7 @@ class AuthRegisterRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'required|between:1,255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'password' => 'required|min:8',
         ];
     }

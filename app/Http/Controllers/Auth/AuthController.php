@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRegisterRequest;
+use App\Http\Requests\AuthLoginRequest;
+use App\Http\Resources\AuthLoginResource;
 use App\Http\Resources\AuthRegisterResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Throwable;
 
 class AuthController extends Controller
@@ -26,14 +29,25 @@ class AuthController extends Controller
         } catch (Throwable $t) {
             return response()->json([
                 'message' => $t->getMessage(),
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json(new AuthRegisterResource($user));
     }
 
-    public function login(Request $request)
+    public function login(AuthLoginRequest $request)
     {
+        $token = $this->userService->getToken(
+            $request->get('email'),
+            $request->get('password'),
+        );
 
+        if (!$token) {
+            return response()->json([
+                'message' => Response::$statusTexts[Response::HTTP_NOT_FOUND]
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json(new AuthLoginResource($token));
     }
 }
