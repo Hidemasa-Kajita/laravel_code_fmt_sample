@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRegisterRequest;
 use App\Http\Requests\AuthLoginRequest;
-use App\Http\Resources\AuthLoginResource;
 use App\Http\Resources\AuthRegisterResource;
 use App\Services\UserService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Throwable;
 
@@ -48,6 +46,8 @@ class AuthController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json(new AuthLoginResource($token));
+        return response()->json([
+            'access_token' => $token
+        ]);
     }
 }

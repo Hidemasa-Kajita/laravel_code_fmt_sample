@@ -22,7 +22,7 @@ class UserService {
         return $user;
     }
 
-    public function getToken(string $email, string $password): ?PersonalAccessToken
+    public function getToken(string $email, string $password): ?string
     {
         $user = $this->userRepository->getFirstWhere([
             'email' => $email,
@@ -36,6 +36,6 @@ class UserService {
 
         $user->tokens()->where('tokenable_id', $user->id)->delete();
 
-        return $user->createToken('default')->accessToken;
+        return $user->createToken('default')->plainTextToken;
     }
 }
