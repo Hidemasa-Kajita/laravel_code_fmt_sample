@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +19,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/login', function () {
-    $user = Auth::loginUsingId(2);
-    $token = $user->createToken('test');
-    return response()->json($token);
+Route::prefix('/auth')->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 });
+
+// Route::get('/login', function () {
+//     $user = Auth::loginUsingId(2);
+//     $token = $user->createToken('test');
+//     return response()->json($token);
+// });

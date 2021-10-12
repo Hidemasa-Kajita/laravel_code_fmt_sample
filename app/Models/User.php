@@ -42,15 +42,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function createToken(string $name, array $abilities = ['*'])
-    {
-        $token = $this->tokens()->create([
-            'name' => $name,
-            'token' => hash('sha256', $plainTextToken = Str::random(40)),
-            'abilities' => $abilities,
-        ]);
-
-        return new NewAccessToken($token, $token->id.'|'.$plainTextToken);
-    }
 }

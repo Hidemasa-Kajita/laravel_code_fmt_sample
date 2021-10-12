@@ -2,4 +2,9 @@
 
 namespace App\Repositories;
 
-class UserRepository extends BaseRepository {}
+class UserRepository extends BaseRepository {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+}
