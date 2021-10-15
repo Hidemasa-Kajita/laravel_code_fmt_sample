@@ -2,9 +2,11 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
+    # autoload_files:
+    #     - _ide_helper.php
     level: max
     paths:
-        - app/Console/Commands
+        - app
     # excludePaths:
     #     analyseAndScan:
     #         - zpp/hoge/fuga

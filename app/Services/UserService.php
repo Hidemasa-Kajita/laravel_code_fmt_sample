@@ -9,9 +9,18 @@ use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class UserService {
+    /** @param UserRepository $userRepository */
     public function __construct(private UserRepository $userRepository){}
 
-    public function register(string $name, $email, string $password): User
+    /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @return User
+     */
+    public function register(string $name, string $email, string $password): User
     {
         $user = User::create([
             'name' => $name,
@@ -22,7 +31,14 @@ class UserService {
         return $user;
     }
 
-    public function getToken(string $email, string $password): ?string
+    /**
+     * Undocumented function
+     *
+     * @param string $email
+     * @param string $password
+     * @return string|null
+     */
+    public function issueToken(string $email, string $password): ?string
     {
         $user = $this->userRepository->getFirstWhere([
             'email' => $email,

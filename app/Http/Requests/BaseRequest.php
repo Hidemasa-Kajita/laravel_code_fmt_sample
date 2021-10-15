@@ -19,6 +19,14 @@ abstract class BaseRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Undocumented function
+     * 
+     * @throws HttpResponseException
+     * 
+     * @param Validator $validator
+     * @return void
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(

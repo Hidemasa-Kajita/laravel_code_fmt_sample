@@ -7,11 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 interface RepositoryInterface
 {
-    public function getOneById($id): ?Model;
+    /**
+     * @template T
+     * @param int $id
+     * @return \Illuminate\Database\Eloquent\Collection<\Illuminate\Database\Eloquent\Model>|\Illuminate\Database\Eloquent\Model|null
+     */
+    public function getOneById(int $id);
 
-    /** @return Collection|array<Model> */
+    /**
+     * @param integer[] $ids
+     * @return \Illuminate\Database\Eloquent\Collection<\Illuminate\Database\Eloquent\Model>|\Illuminate\Database\Eloquent\Model|null
+     */
     public function getByIds(array $ids): Collection;
 
-    /** @return Collection|array<Model> */
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<\Illuminate\Database\Eloquent\Model>
+     */
     public function getAll(): Collection;
+
+    /**
+     * @param array<string,string>[] ...$params
+     * @return Model|null
+     */
+    public function getFirstWhere(...$params): ?Model;
 }

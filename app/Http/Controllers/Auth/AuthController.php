@@ -7,16 +7,29 @@ use App\Http\Requests\AuthRegisterRequest;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Resources\AuthRegisterResource;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Throwable;
 
+/**
+ * @package App\Http\Controllers\Auth
+ */
 class AuthController extends Controller
 {
+    /**
+     * @param UserService $userService
+     */
     public function __construct(
         private UserService $userService,
     ){}
 
-    public function register(AuthRegisterRequest $request)
+    /**
+     * ユーザー登録
+     *
+     * @param AuthRegisterRequest $request
+     * @return JsonResponse
+     */
+    public function register(AuthRegisterRequest $request): JsonResponse
     {
         try {
             $user = $this->userService->register(
@@ -33,9 +46,15 @@ class AuthController extends Controller
         return response()->json(new AuthRegisterResource($user));
     }
 
-    public function login(AuthLoginRequest $request)
+    /**
+     * ログイン
+     *
+     * @param AuthLoginRequest $request
+     * @return JsonResponse
+     */
+    public function login(AuthLoginRequest $request): JsonResponse
     {
-        $token = $this->userService->getToken(
+        $token = $this->userService->issueToken(
             $request->get('email'),
             $request->get('password'),
         );
